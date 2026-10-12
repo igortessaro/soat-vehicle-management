@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/010 - Enterprise Business Rules/">
+    <Project Path="src/Fiap.Soat.VehicleManagement.Domain/Fiap.Soat.VehicleManagement.Domain.csproj" />
+  </Folder>
+  <Folder Name="/020 - Application Business Rules/">
+    <Project Path="src/Fiap.Soat.VehicleManagement.Application/Fiap.Soat.VehicleManagement.Application.csproj" />
+  </Folder>
+  <Folder Name="/030 - Frameworks &amp; Drivers/">
+    <Project Path="src/Fiap.Soat.VehicleManagement.Api/Fiap.Soat.VehicleManagement.Api.csproj" />
+    <Project Path="src/Fiap.Soat.VehicleManagement.Infrastructure/Fiap.Soat.VehicleManagement.Infrastructure.csproj" />
+  </Folder>
+</Solution>
