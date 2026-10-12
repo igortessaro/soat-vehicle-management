@@ -1,5 +1,6 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 using Fiap.Soat.VehicleManagement.Application.Models;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
