@@ -2,6 +2,8 @@ using Fiap.Soat.VehicleManagement.Application.Adapters.Presenters;
 using Fiap.Soat.VehicleManagement.Application.Mappers;
 using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +16,7 @@ public sealed class VehicleController(IMediator mediator) : IVehicleController
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> GetAllAsync(GetVehicleQuery query, CancellationToken cancellationToken)
+    public Task<IActionResult> GetAllAsync(ListVehicleQuery query, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

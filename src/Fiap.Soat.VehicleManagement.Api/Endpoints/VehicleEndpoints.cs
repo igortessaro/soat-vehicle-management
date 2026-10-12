@@ -1,6 +1,8 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
@@ -16,7 +18,7 @@ public static class VehicleEndpoints
             .WithName("GetVehicle")
             .WithDescription("Get a vehicle by ID");
 
-        vehiclesApi.MapGet("", ([FromServices] IVehicleController controller, [AsParameters] GetVehicleQuery request, CancellationToken cancellationToken) =>
+        vehiclesApi.MapGet("", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
                 controller.GetAllAsync(request, cancellationToken))
             .WithName("ListVehicles")
             .WithDescription("List all vehicles");
