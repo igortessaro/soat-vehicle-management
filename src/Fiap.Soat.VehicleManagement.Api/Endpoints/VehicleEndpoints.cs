@@ -1,5 +1,4 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
-using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;

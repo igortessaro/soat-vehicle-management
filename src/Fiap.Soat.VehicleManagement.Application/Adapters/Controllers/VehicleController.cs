@@ -1,7 +1,7 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Presenters;
 using Fiap.Soat.VehicleManagement.Application.Mappers;
-using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
+using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Get;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 using MediatR;
@@ -11,14 +11,18 @@ namespace Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 
 public sealed class VehicleController(IMediator mediator) : IVehicleController
 {
-    public Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(new GetVehicleByIdQuery(id), cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 
-    public Task<IActionResult> GetAllAsync(ListVehicleQuery query, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllAsync(ListVehicleQuery query, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(query, cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 
     public async Task<IActionResult> CreateAsync(CreateVehicleCommand request, CancellationToken cancellationToken)
@@ -28,23 +32,31 @@ public sealed class VehicleController(IMediator mediator) : IVehicleController
         return ActionResultPresenter.ToActionResult(result);
     }
 
-    public Task<IActionResult> UpdateAsync(Guid id, UpdateVehicleCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(Guid id, UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(request, cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 
-    public Task<IActionResult> ReserveAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> ReserveAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(new ReserveVehicleCommand(id), cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 
-    public Task<IActionResult> ReleaseAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> ReleaseAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(new ReleaseVehicleCommand(id), cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 
-    public Task<IActionResult> SellAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> SellAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var response = await mediator.Send(new SellVehicleCommand(id), cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return ActionResultPresenter.ToActionResult(result);
     }
 }
