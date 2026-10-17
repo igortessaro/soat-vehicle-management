@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 
-public record UpdateVehicleCommand(Guid Id, string Brand, string Model, string LicensePlate, int Year, string Color, decimal Price, string Status) : IRequest<Response<Domain.Entities.Vehicle>>;
+public record UpdateVehicleCommand(Guid Id, string Brand, string Model, string LicensePlate, int Year, string Color, decimal Price) : IRequest<Response<Domain.Entities.Vehicle>>;

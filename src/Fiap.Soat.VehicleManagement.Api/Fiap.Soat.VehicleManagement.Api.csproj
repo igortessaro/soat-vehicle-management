@@ -5,13 +5,20 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>822b3969-fb76-4349-8dfa-c1a9ca4e5589</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="9.0.21" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.17.14" />
         <PackageReference Include="Scalar.AspNetCore.Microsoft" Version="2.17.14" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.21" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.21">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -23,6 +30,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Fiap.Soat.VehicleManagement.Application\Fiap.Soat.VehicleManagement.Application.csproj" />
       <ProjectReference Include="..\Fiap.Soat.VehicleManagement.Domain\Fiap.Soat.VehicleManagement.Domain.csproj" />
+      <ProjectReference Include="..\Fiap.Soat.VehicleManagement.Infrastructure\Fiap.Soat.VehicleManagement.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

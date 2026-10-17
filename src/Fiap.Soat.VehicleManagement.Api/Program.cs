@@ -3,8 +3,10 @@ using Fiap.Soat.VehicleManagement.Api.Shared.Extensions;
 using Fiap.Soat.VehicleManagement.Api.Shared.HealthChecks;
 using Fiap.Soat.VehicleManagement.Api.Shared.Middlewares;
 using Fiap.Soat.VehicleManagement.Application.Shared;
+using Fiap.Soat.VehicleManagement.Infrastructure.Data;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -18,16 +20,19 @@ _ = builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
 
+// Configure MySQL
+var mySqlConnectionString = builder.Configuration.GetConnectionString("MySql")
+                            ?? throw new InvalidOperationException("Connection string 'MySql' was not configured.");
+_ = builder.Services.AddDbContext<AppDbContext>((options) => options.UseMySql(mySqlConnectionString, ServerVersion.AutoDetect(mySqlConnectionString)));
+
 // Add services to the container.
 _ = builder.Services.AddServiceExtensions();
 _ = builder.Services.AddRepositoryExtensions();
-// _ = builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 _ = builder.Services.AddUseCases();
-// _ = builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(UpdateProcessingFileStatusCommand).Assembly));
 _ = builder.Services.AddHttpContextAccessor();
 _ = builder.Services.AddHealthChecks()
-    .AddCheck<DetailedHealthCheck>("detailed");
-    // .AddDbContextCheck<AppDbContext>("database");
+    .AddCheck<DetailedHealthCheck>("detailed")
+    .AddDbContextCheck<AppDbContext>("database");
 _ = builder.Services.AddRouting(options => options.LowercaseUrls = true);
 _ = builder.Services.AddMemoryCache();
 _ = builder.Services.AddInterfaceAdapters();
