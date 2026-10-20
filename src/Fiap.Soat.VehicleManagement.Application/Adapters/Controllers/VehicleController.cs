@@ -35,7 +35,7 @@ public sealed class VehicleController(IMediator mediator) : IVehicleController
 
     public async Task<Response<VehicleDetail>> UpdateAsync(Guid id, UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
-        var response = await mediator.Send(request, cancellationToken);
+        var response = await mediator.Send(request with { Id = id }, cancellationToken);
         var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
         return result;
     }
