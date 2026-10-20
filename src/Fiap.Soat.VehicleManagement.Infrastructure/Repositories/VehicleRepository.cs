@@ -1,5 +1,6 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 using Fiap.Soat.VehicleManagement.Domain.Entities;
+using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using Fiap.Soat.VehicleManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ public sealed class VehicleRepository(AppDbContext appDbContext) : Repository<Ve
         string? brand,
         string? color,
         int? year,
-        string? status,
+        VehicleStatus? status,
         CancellationToken cancellationToken)
     {
         var query = Query();
@@ -21,8 +22,11 @@ public sealed class VehicleRepository(AppDbContext appDbContext) : Repository<Ve
         if (!string.IsNullOrEmpty(model)) query = query.Where(x => x.Model == model);
         if (!string.IsNullOrEmpty(brand)) query = query.Where(x => x.Brand == brand);
         if (!string.IsNullOrEmpty(color)) query = query.Where(x => x.Color == color);
-        if (year.HasValue) query = query.Where(x => x.Year == year);
-        if (!string.IsNullOrEmpty(status)) query = query.Where(x => x.Status == status);
+        if (year.HasValue) query = query.Where(x => x.ManufactureYear == year);
+        if (status.HasValue) query = query.Where(x => x.Status == status);
         return await query.ToListAsync(cancellationToken);
     }
+
+    public Task<Vehicle?> GetByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken) =>
+        Query().FirstOrDefaultAsync(x => x.LicensePlate == licensePlate, cancellationToken);
 }

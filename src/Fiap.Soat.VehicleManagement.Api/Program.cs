@@ -1,5 +1,6 @@
 using Fiap.Soat.VehicleManagement.Api.Endpoints;
 using Fiap.Soat.VehicleManagement.Api.Shared.Extensions;
+using Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 using Fiap.Soat.VehicleManagement.Api.Shared.HealthChecks;
 using Fiap.Soat.VehicleManagement.Api.Shared.Middlewares;
 using Fiap.Soat.VehicleManagement.Application.Shared;
@@ -12,7 +13,6 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-_ = builder.Services.AddControllers();
 _ = builder.Services.AddEndpointsApiExplorer();
 _ = builder.Services.AddControllers().AddJsonOptions(options =>
 {

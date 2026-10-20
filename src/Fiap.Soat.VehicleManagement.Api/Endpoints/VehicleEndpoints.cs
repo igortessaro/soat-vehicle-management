@@ -1,4 +1,6 @@
+using Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
+using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
@@ -10,7 +12,10 @@ public static class VehicleEndpoints
 {
     public static WebApplication Map(WebApplication app)
     {
-        var vehiclesApi = app.MapGroup("api/v1/vehicles").WithTags("Vehicles");
+        var vehiclesApi = app
+            .MapGroup("api/v1/vehicles")
+            .AddEndpointFilter<ResponseFilter<VehicleDetail>>()
+            .WithTags("Vehicles");
 
         vehiclesApi.MapGet("/{id:guid}", ([FromServices] IVehicleController controller, Guid id, CancellationToken cancellationToken) =>
                     controller.GetAsync(id, cancellationToken))

@@ -1,4 +1,5 @@
 using Fiap.Soat.VehicleManagement.Domain.Entities;
+using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ public sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 {
     public void Configure(EntityTypeBuilder<Vehicle> builder)
     {
-        builder.ToTable("vehicle");
+        builder.ToTable("vehicles");
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
@@ -26,7 +27,8 @@ public sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
             .IsRequired();
 
         builder.Property(x => x.Type)
-            .HasColumnName("type")
+            .HasColumnName("vehicle_type")
+            .HasConversion<string>()
             .HasColumnType("VARCHAR(30)")
             .HasMaxLength(30)
             .IsRequired();
@@ -47,7 +49,12 @@ public sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
             .HasColumnName("license_plate")
             .HasColumnType("VARCHAR(20)")
             .HasMaxLength(20)
+            .HasConversion(
+                licensePlate => licensePlate.Value,
+                value => (LicensePlate)value)
             .IsRequired();
+
+        builder.HasIndex(x => x.LicensePlate).IsUnique();
 
         builder.Property(x => x.Color)
             .HasColumnName("color")
@@ -57,12 +64,13 @@ public sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 
         builder.Property(x => x.Status)
             .HasColumnName("status")
+            .HasConversion<string>()
             .HasColumnType("VARCHAR(30)")
             .HasMaxLength(30)
             .IsRequired();
 
-        builder.Property(x => x.Year)
-            .HasColumnName("year")
+        builder.Property(x => x.ManufactureYear)
+            .HasColumnName("manufacture_year")
             .HasColumnType("INT")
             .IsRequired();
 

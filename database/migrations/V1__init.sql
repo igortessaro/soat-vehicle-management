@@ -1,17 +1,16 @@
-CREATE TABLE vehicle (
-    id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
-    type VARCHAR(30) NOT NULL DEFAULT 'CAR',
-    brand VARCHAR(100) NOT NULL,
-    model VARCHAR(150) NOT NULL,
-    license_plate VARCHAR(20) NOT NULL,
-    color VARCHAR(50) NOT NULL,
-    status VARCHAR(30) NOT NULL DEFAULT 'AVAILABLE',
-    price DECIMAL(12, 2) NOT NULL,
-    year YEAR NOT NULL,
-    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-    updated_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-
-    PRIMARY KEY (id),
-    UNIQUE KEY uk_vehicle_license_plate (license_plate),
-    KEY idx_vehicle_status_price (status, price)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+create table if not exists vehicles (
+    id char(36) charset ascii not null primary key,
+    vehicle_type varchar(30) not null default 'CAR',
+    license_plate varchar(20) not null,
+    manufacture_year int not null,
+    brand varchar(50) not null,
+    model varchar(100) not null,
+    color varchar(50) not null,
+    status varchar(30) not null default 'AVAILABLE',
+    price decimal(12, 2) not null,
+    created_at datetime(6) not null default current_timestamp(6),
+    updated_at datetime(6) not null default current_timestamp(6) on update current_timestamp(6),
+    constraint IX_vehicles_license_plate unique (license_plate),
+    unique key uk_vehicle_license_plate (license_plate),
+    key idx_vehicle_status_price (status, price)
+);

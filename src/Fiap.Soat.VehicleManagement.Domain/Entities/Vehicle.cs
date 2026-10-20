@@ -1,33 +1,61 @@
+using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
+
 namespace Fiap.Soat.VehicleManagement.Domain.Entities;
 
 public sealed class Vehicle : Entity
 {
-    private const string TypeCar = "CAR";
-    private const string AvailableStatus = "AVAILABLE";
+    private Vehicle() { }
 
-    public Vehicle(string brand, string model, string licensePlate, int year, string color)
+    public Vehicle(string brand, string model, string licensePlate, int manufactureYear, string color)
     {
         Brand = brand;
         Model = model;
         LicensePlate = licensePlate;
-        Year = year;
+        ManufactureYear = manufactureYear;
         Color = color;
     }
 
-    private Vehicle() { }
-
-    public string Type { get; private set; } = TypeCar;
+    public VehicleType Type { get; private set; } = VehicleType.Car;
     public string Brand { get; private set; }
     public string Model { get; private set; }
-    public string LicensePlate { get; private set; }
-    public int Year { get; private set; }
+    public LicensePlate LicensePlate { get; private set; } = null!;
+    public int ManufactureYear { get; private set; }
     public string Color { get; private set; }
     public decimal Price { get; private set; }
-    public string Status { get; private set; } = AvailableStatus;
+    public VehicleStatus Status { get; private set; } = VehicleStatus.Available;
 
     public Vehicle UpdatePrice(decimal price)
     {
         Price = price;
+        return this;
+    }
+
+    public Vehicle Update(string brand, string model, string licensePlate, int year, string color, decimal price)
+    {
+        Brand = brand;
+        Model = model;
+        LicensePlate = licensePlate;
+        ManufactureYear = year;
+        Color = color;
+        Price = price;
+        return this;
+    }
+
+    public Vehicle Release()
+    {
+        Status = VehicleStatus.Delivered;
+        return this;
+    }
+
+    public Vehicle Reserve()
+    {
+        Status = VehicleStatus.Reserved;
+        return this;
+    }
+
+    public Vehicle Sold()
+    {
+        Status = VehicleStatus.Sold;
         return this;
     }
 }
