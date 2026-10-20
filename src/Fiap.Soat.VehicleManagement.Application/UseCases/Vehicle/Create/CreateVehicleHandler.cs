@@ -13,7 +13,7 @@ public sealed class CreateVehicleHandler(IVehicleRepository repository) : IReque
         if (string.IsNullOrWhiteSpace(request.Model)) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Model is required");
         if (string.IsNullOrWhiteSpace(request.LicensePlate)) return ResponseFactory.Fail<Domain.Entities.Vehicle>("License plate is required");
         if (string.IsNullOrWhiteSpace(request.Color)) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Color is required");
-        if (request.Year > 1903) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Year must be a valid year");
+        if (request.Year <= 1903) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Year must be a valid year");
         if (request.Price <= 0) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Price must be greater than zero");
 
         var existingVehicle = await repository.GetByLicensePlateAsync(request.LicensePlate, cancellationToken);
