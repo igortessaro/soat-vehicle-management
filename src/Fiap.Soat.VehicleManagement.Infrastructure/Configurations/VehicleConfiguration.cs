@@ -51,7 +51,7 @@ public sealed class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
             .HasMaxLength(20)
             .HasConversion(
                 licensePlate => licensePlate.Value,
-                value => (LicensePlate)value)
+                value => (LicensePlate) value)
             .IsRequired();
 
         builder.HasIndex(x => x.LicensePlate).IsUnique();
