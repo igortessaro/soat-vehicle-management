@@ -1,12 +1,21 @@
 <Solution>
-  <Folder Name="/010 - Enterprise Business Rules/">
+  <Folder Name="/src/" />
+  <Folder Name="/src/010 - Enterprise Business Rules/">
     <Project Path="src/Fiap.Soat.VehicleManagement.Domain/Fiap.Soat.VehicleManagement.Domain.csproj" />
   </Folder>
-  <Folder Name="/020 - Application Business Rules/">
+  <Folder Name="/src/020 - Application Business Rules/">
     <Project Path="src/Fiap.Soat.VehicleManagement.Application/Fiap.Soat.VehicleManagement.Application.csproj" />
   </Folder>
-  <Folder Name="/030 - Frameworks &amp; Drivers/">
+  <Folder Name="/src/030 - Frameworks &amp; Drivers/">
     <Project Path="src/Fiap.Soat.VehicleManagement.Api/Fiap.Soat.VehicleManagement.Api.csproj" />
     <Project Path="src/Fiap.Soat.VehicleManagement.Infrastructure/Fiap.Soat.VehicleManagement.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fiap.Soat.VehicleManagement.Api.Tests/Fiap.Soat.VehicleManagement.Api.Tests.csproj" />
+    <Project Path="tests/Fiap.Soat.VehicleManagement.Application.Tests/Fiap.Soat.VehicleManagement.Application.Tests.csproj" />
+    <Project Path="tests/Fiap.Soat.VehicleManagement.Domain.Tests/Fiap.Soat.VehicleManagement.Domain.Tests.csproj" />
+    <Project Path="tests/Fiap.Soat.VehicleManagement.Infrastructure.Tests/Fiap.Soat.VehicleManagement.Infrastructure.Tests.csproj" />
+    <Project Path="tests/Fiap.Soat.VehicleManagement.Integration.Tests/Fiap.Soat.VehicleManagement.Integration.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/" />
 </Solution>
