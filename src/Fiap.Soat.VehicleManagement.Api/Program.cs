@@ -1,6 +1,5 @@
 using Fiap.Soat.VehicleManagement.Api.Endpoints;
 using Fiap.Soat.VehicleManagement.Api.Shared.Extensions;
-using Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 using Fiap.Soat.VehicleManagement.Api.Shared.HealthChecks;
 using Fiap.Soat.VehicleManagement.Api.Shared.Middlewares;
 using Fiap.Soat.VehicleManagement.Application.Shared;
@@ -86,7 +85,10 @@ _ = VehicleInternalEndpoints.Map(app);
 
 await app.RunAsync();
 
-public partial class Program
+namespace Fiap.Soat.VehicleManagement.Api
 {
-    protected Program() { }
+    public partial class Program
+    {
+        protected Program() { }
+    }
 }

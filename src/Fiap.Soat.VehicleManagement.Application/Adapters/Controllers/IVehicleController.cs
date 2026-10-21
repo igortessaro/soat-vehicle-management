@@ -2,9 +2,7 @@ using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
-using Fiap.Soat.VehicleManagement.Domain.Entities;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 
