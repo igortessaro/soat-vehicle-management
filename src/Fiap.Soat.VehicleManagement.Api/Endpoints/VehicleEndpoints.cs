@@ -4,6 +4,7 @@ using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
+using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
@@ -26,6 +27,16 @@ public static class VehicleEndpoints
                 controller.GetAllAsync(request, cancellationToken))
             .WithName("ListVehicles")
             .WithDescription("List all vehicles");
+
+        vehiclesApi.MapGet("sold", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
+            controller.GetAllAsync(request with { Status = [VehicleStatus.Sold, VehicleStatus.Delivered] }, cancellationToken))
+            .WithName("ListSoldVehicles")
+            .WithDescription("List all sold vehicles");
+
+        vehiclesApi.MapGet("available", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
+            controller.GetAllAsync(request with { Status = [VehicleStatus.Available] }, cancellationToken))
+            .WithName("ListAvailableVehicles")
+            .WithDescription("List all available vehicles");
 
         vehiclesApi.MapPost("", ([FromServices] IVehicleController controller, [FromBody] CreateVehicleCommand command, CancellationToken cancellationToken) =>
                 controller.CreateAsync(command, cancellationToken))

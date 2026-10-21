@@ -14,7 +14,7 @@ public sealed class VehicleRepository(AppDbContext appDbContext) : Repository<Ve
         string? brand,
         string? color,
         int? year,
-        VehicleStatus? status,
+        VehicleStatus[] status,
         CancellationToken cancellationToken)
     {
         var query = Query();
@@ -23,8 +23,8 @@ public sealed class VehicleRepository(AppDbContext appDbContext) : Repository<Ve
         if (!string.IsNullOrEmpty(brand)) query = query.Where(x => x.Brand == brand);
         if (!string.IsNullOrEmpty(color)) query = query.Where(x => x.Color == color);
         if (year.HasValue) query = query.Where(x => x.ManufactureYear == year);
-        if (status.HasValue) query = query.Where(x => x.Status == status);
-        return await query.ToListAsync(cancellationToken);
+        if (status is { Length: > 0 }) query = query.Where(x => status.Contains(x.Status));
+        return await query.OrderBy(x => x.Price).ToListAsync(cancellationToken);
     }
 
     public Task<Vehicle?> GetByLicensePlateAsync(string licensePlate, CancellationToken cancellationToken) =>
