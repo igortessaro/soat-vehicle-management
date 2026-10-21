@@ -1,4 +1,6 @@
+using Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
+using Fiap.Soat.VehicleManagement.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
@@ -7,7 +9,10 @@ public static class VehicleInternalEndpoints
 {
     public static WebApplication Map(WebApplication app)
     {
-        var vehiclesApi = app.MapGroup("api/v1/internal/vehicles").WithTags("Vehicles");
+        var vehiclesApi = app
+            .MapGroup("api/v1/internal/vehicles")
+            .AddEndpointFilter<ResponseFilter<VehicleDetail>>()
+            .WithTags("Vehicles");
 
         vehiclesApi.MapPost("/{id:guid}/reserve", ([FromServices] IVehicleController controller, Guid id, CancellationToken cancellationToken) =>
             controller.ReserveAsync(id, cancellationToken))
