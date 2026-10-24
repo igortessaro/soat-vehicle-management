@@ -60,4 +60,11 @@ public sealed class VehicleController(IMediator mediator) : IVehicleController
         var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
         return result;
     }
+
+    public async Task<Response<VehicleDetail>> DeliverAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(new DeliverVehicleCommand(id), cancellationToken);
+        var result = ResponseMapper.Map(response, VehiclePresenter.ToDto);
+        return result;
+    }
 }

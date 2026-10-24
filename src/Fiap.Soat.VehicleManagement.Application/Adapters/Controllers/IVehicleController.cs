@@ -15,4 +15,5 @@ public interface IVehicleController
     Task<Response<VehicleDetail>> ReserveAsync(Guid id, CancellationToken cancellationToken);
     Task<Response<VehicleDetail>> ReleaseAsync(Guid id, CancellationToken cancellationToken);
     Task<Response<VehicleDetail>> SellAsync(Guid id, CancellationToken cancellationToken);
+    Task<Response<VehicleDetail>> DeliverAsync(Guid id, CancellationToken cancellationToken);
 }

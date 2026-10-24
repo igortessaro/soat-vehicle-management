@@ -43,7 +43,7 @@ public sealed class Vehicle : Entity
 
     public Vehicle Release()
     {
-        Status = VehicleStatus.Delivered;
+        Status = VehicleStatus.Available;
         return this;
     }
 
@@ -56,6 +56,12 @@ public sealed class Vehicle : Entity
     public Vehicle Sold()
     {
         Status = VehicleStatus.Sold;
+        return this;
+    }
+
+    public Vehicle Deliver()
+    {
+        Status = VehicleStatus.Delivered;
         return this;
     }
 }

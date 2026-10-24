@@ -29,6 +29,11 @@ public static class VehicleInternalEndpoints
             .WithName("SellVehicle")
             .WithDescription("Sell a vehicle");
 
+        vehiclesApi.MapPost("/{id:guid}/deliver", ([FromServices] IVehicleController controller, Guid id, CancellationToken cancellationToken) =>
+            controller.DeliverAsync(id, cancellationToken))
+            .WithName("DeliverVehicle")
+            .WithDescription("Deliver a vehicle");
+
         return app;
     }
 }

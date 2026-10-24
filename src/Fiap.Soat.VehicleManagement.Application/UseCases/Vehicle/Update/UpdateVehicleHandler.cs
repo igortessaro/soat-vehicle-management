@@ -9,7 +9,8 @@ public sealed class UpdateVehicleHandler(IVehicleRepository repository) :
     IRequestHandler<UpdateVehicleCommand, Response<Domain.Entities.Vehicle>>,
     IRequestHandler<ReleaseVehicleCommand, Response<Domain.Entities.Vehicle>>,
     IRequestHandler<ReserveVehicleCommand, Response<Domain.Entities.Vehicle>>,
-    IRequestHandler<SellVehicleCommand, Response<Domain.Entities.Vehicle>>
+    IRequestHandler<SellVehicleCommand, Response<Domain.Entities.Vehicle>>,
+    IRequestHandler<DeliverVehicleCommand, Response<Domain.Entities.Vehicle>>
 {
     public async Task<Response<Domain.Entities.Vehicle>> Handle(UpdateVehicleCommand request, CancellationToken cancellationToken)
     {
@@ -31,7 +32,7 @@ public sealed class UpdateVehicleHandler(IVehicleRepository repository) :
     {
         var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
         if (entity == null) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Vehicle not found");
-        if (entity.Status != VehicleStatus.Sold && entity.Status != VehicleStatus.Delivered)
+        if (entity.Status != VehicleStatus.Reserved && entity.Status != VehicleStatus.Available)
         {
             return ResponseFactory.Fail<Domain.Entities.Vehicle>("Is not possible to release a vehicle that is not sold or delivered");
         }
@@ -60,6 +61,18 @@ public sealed class UpdateVehicleHandler(IVehicleRepository repository) :
             return ResponseFactory.Fail<Domain.Entities.Vehicle>("Is not possible to sell a vehicle that is not reserved or sold");
         }
         await repository.UpdateAsync(entity.Sold(), cancellationToken);
+        return ResponseFactory.Ok(entity);
+    }
+
+    public async Task<Response<Domain.Entities.Vehicle>> Handle(DeliverVehicleCommand request, CancellationToken cancellationToken)
+    {
+        var entity = await repository.GetByIdAsync(request.Id, cancellationToken);
+        if (entity == null) return ResponseFactory.Fail<Domain.Entities.Vehicle>("Vehicle not found");
+        if (entity.Status != VehicleStatus.Sold && entity.Status != VehicleStatus.Delivered)
+        {
+            return ResponseFactory.Fail<Domain.Entities.Vehicle>("Is not possible to deliver a vehicle that is not sold or delivered");
+        }
+        await repository.UpdateAsync(entity.Deliver(), cancellationToken);
         return ResponseFactory.Ok(entity);
     }
 }
