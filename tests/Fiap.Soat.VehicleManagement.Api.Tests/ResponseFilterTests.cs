@@ -16,7 +16,7 @@ public class ResponseFilterTests
             ValueTask.FromResult<object?>(ResponseFactory.Fail<string>("invalid")));
 
         Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
-        Assert.That(((IStatusCodeHttpResult)result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
     }
 
     [Test]
@@ -29,7 +29,7 @@ public class ResponseFilterTests
             ValueTask.FromResult<object?>(ResponseFactory.Fail("invalid")));
 
         Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
-        Assert.That(((IStatusCodeHttpResult)result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
     }
 
     [Test]
@@ -49,6 +49,6 @@ public class ResponseFilterTests
         public override HttpContext HttpContext { get; } = new DefaultHttpContext();
         public override IList<object?> Arguments { get; } = [];
 
-        public override T GetArgument<T>(int index) => (T)Arguments[index]!;
+        public override T GetArgument<T>(int index) => (T) Arguments[index]!;
     }
 }
