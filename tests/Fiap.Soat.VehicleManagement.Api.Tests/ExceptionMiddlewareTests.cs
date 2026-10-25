@@ -17,7 +17,7 @@ public class ExceptionMiddlewareTests
     [TestCase(typeof(InvalidOperationException), 500)]
     public async Task InvokeAsync_MapsExceptionToExpectedStatus(Type exceptionType, int expectedStatusCode)
     {
-        var exception = (Exception)Activator.CreateInstance(exceptionType, "failure")!;
+        var exception = (Exception) Activator.CreateInstance(exceptionType, "failure")!;
         var middleware = new ExceptionMiddleware(
             _ => throw exception,
             NullLogger<ExceptionMiddleware>.Instance);
