@@ -1,4 +1,5 @@
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
+using System;
 
 namespace Fiap.Soat.VehicleManagement.Application.Models;
 

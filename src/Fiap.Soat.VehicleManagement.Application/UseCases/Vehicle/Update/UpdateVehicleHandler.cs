@@ -2,6 +2,8 @@ using Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 

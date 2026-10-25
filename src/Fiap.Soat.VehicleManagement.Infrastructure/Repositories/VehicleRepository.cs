@@ -3,6 +3,10 @@ using Fiap.Soat.VehicleManagement.Domain.Entities;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using Fiap.Soat.VehicleManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Infrastructure.Repositories;
 

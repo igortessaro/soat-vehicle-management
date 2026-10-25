@@ -15,7 +15,8 @@ public class ResponseFilterTests
         var result = await filter.InvokeAsync(context, _ =>
             ValueTask.FromResult<object?>(ResponseFactory.Fail<string>("invalid")));
 
-        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
+        Assert.That(((IStatusCodeHttpResult)result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
     }
 
     [Test]
@@ -27,7 +28,8 @@ public class ResponseFilterTests
         var result = await filter.InvokeAsync(context, _ =>
             ValueTask.FromResult<object?>(ResponseFactory.Fail("invalid")));
 
-        Assert.That(result, Is.Not.Null);
+        Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
+        Assert.That(((IStatusCodeHttpResult)result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
     }
 
     [Test]
@@ -46,5 +48,7 @@ public class ResponseFilterTests
     {
         public override HttpContext HttpContext { get; } = new DefaultHttpContext();
         public override IList<object?> Arguments { get; } = [];
+
+        public override T GetArgument<T>(int index) => (T)Arguments[index]!;
     }
 }

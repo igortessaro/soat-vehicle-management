@@ -1,5 +1,8 @@
 using Fiap.Soat.VehicleManagement.Domain.Entities;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 

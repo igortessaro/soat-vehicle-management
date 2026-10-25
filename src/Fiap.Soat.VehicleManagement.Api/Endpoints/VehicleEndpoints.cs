@@ -5,7 +5,11 @@ using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Create;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
 

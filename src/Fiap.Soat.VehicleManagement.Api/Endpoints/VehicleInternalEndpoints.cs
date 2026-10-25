@@ -1,7 +1,11 @@
 using Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 using Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 using Fiap.Soat.VehicleManagement.Application.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
 

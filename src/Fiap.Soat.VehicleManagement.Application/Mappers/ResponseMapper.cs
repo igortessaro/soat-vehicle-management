@@ -1,4 +1,6 @@
 using Fiap.Soat.VehicleManagement.Domain.Shared;
+using System;
+using System.Linq;
 
 namespace Fiap.Soat.VehicleManagement.Application.Mappers;
 

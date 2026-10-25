@@ -1,4 +1,6 @@
 using Fiap.Soat.VehicleManagement.Domain.Shared;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Api.Shared.Filters;
 

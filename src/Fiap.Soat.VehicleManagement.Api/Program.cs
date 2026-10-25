@@ -5,9 +5,14 @@ using Fiap.Soat.VehicleManagement.Api.Shared.Middlewares;
 using Fiap.Soat.VehicleManagement.Application.Shared;
 using Fiap.Soat.VehicleManagement.Infrastructure.Data;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
+using System;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,7 @@
 using Fiap.Soat.VehicleManagement.Domain.Shared;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using MediatR;
+using System.Collections.Generic;
 
 namespace Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 

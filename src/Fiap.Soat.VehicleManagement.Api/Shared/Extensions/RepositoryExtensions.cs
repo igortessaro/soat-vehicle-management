@@ -1,5 +1,6 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 using Fiap.Soat.VehicleManagement.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Fiap.Soat.VehicleManagement.Api.Shared.Extensions;

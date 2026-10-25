@@ -7,6 +7,10 @@ using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.List;
 using Fiap.Soat.VehicleManagement.Application.UseCases.Vehicle.Update;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Application.Adapters.Controllers;
 

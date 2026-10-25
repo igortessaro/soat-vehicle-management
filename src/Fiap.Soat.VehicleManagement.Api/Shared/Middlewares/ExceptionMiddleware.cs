@@ -1,7 +1,12 @@
 using Fiap.Soat.VehicleManagement.Api.Shared.Exceptions;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Fiap.Soat.VehicleManagement.Api.Shared.Middlewares;
 

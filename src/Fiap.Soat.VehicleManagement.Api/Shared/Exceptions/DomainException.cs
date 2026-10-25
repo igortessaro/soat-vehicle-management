@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Fiap.Soat.VehicleManagement.Api.Shared.Exceptions;

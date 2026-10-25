@@ -1,6 +1,8 @@
 using Fiap.Soat.VehicleManagement.Application.Models;
 using Fiap.Soat.VehicleManagement.Domain.Entities;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Fiap.Soat.VehicleManagement.Application.Adapters.Presenters;
 
