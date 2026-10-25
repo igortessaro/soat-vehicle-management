@@ -40,7 +40,7 @@ public class UpdateVehicleHandlerTests
     public async Task Update_WhenVehicleDoesNotExist_ReturnsFailure()
     {
         var id = Guid.NewGuid();
-        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?)null);
+        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?) null);
 
         var response = await new UpdateVehicleHandler(_repository.Object).Handle(
             new UpdateVehicleCommand(id, "Honda", "Civic", "XYZ9876", 2023, "White", 120000),
@@ -132,7 +132,7 @@ public class UpdateVehicleHandlerTests
     public async Task StateTransition_WhenVehicleDoesNotExist_ReturnsFailure()
     {
         var id = Guid.NewGuid();
-        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?)null);
+        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?) null);
 
         var response = await new UpdateVehicleHandler(_repository.Object)
             .Handle(new ReserveVehicleCommand(id), CancellationToken.None);

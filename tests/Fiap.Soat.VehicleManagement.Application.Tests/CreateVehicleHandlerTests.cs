@@ -61,7 +61,7 @@ public class CreateVehicleHandlerTests
         var created = ApplicationTestData.CreateVehicle();
         _repository
             .Setup(x => x.GetByLicensePlateAsync("ABC1234", It.IsAny<CancellationToken>()))
-            .ReturnsAsync((Vehicle?)null);
+            .ReturnsAsync((Vehicle?) null);
         _repository
             .Setup(x => x.AddAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(created);

@@ -36,7 +36,7 @@ public class VehicleQueryHandlerTests
     public async Task GetById_WhenVehicleDoesNotExist_ReturnsFailure()
     {
         var id = Guid.NewGuid();
-        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?)null);
+        _repository.Setup(x => x.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync((Vehicle?) null);
 
         var response = await new GetVehicleByIdHandler(_repository.Object)
             .Handle(new GetVehicleByIdQuery(id), CancellationToken.None);
