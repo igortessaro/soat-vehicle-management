@@ -27,6 +27,7 @@ public sealed class Vehicle : Entity
     public Vehicle UpdatePrice(decimal price)
     {
         Price = price;
+        MarkAsUpdated();
         return this;
     }
 
@@ -38,30 +39,35 @@ public sealed class Vehicle : Entity
         ManufactureYear = year;
         Color = color;
         Price = price;
+        MarkAsUpdated();
         return this;
     }
 
     public Vehicle Release()
     {
         Status = VehicleStatus.Available;
+        MarkAsUpdated();
         return this;
     }
 
     public Vehicle Reserve()
     {
         Status = VehicleStatus.Reserved;
+        MarkAsUpdated();
         return this;
     }
 
     public Vehicle Sold()
     {
         Status = VehicleStatus.Sold;
+        MarkAsUpdated();
         return this;
     }
 
     public Vehicle Deliver()
     {
         Status = VehicleStatus.Delivered;
+        MarkAsUpdated();
         return this;
     }
 }
