@@ -39,6 +39,8 @@ public sealed class UpdateVehiclesTests : CustomWebApplicationFactory<Program>
             Assert.That(persisted.LicensePlate.Value, Is.EqualTo(request.LicensePlate));
             Assert.That(persisted.ManufactureYear, Is.EqualTo(2023));
             Assert.That(persisted.Price, Is.EqualTo(135000m));
+            Assert.That(body.Data.UpdatedAt, Is.GreaterThan(body.Data.CreatedAt));
+            Assert.That(persisted.UpdatedAt, Is.EqualTo(body.Data.UpdatedAt));
         });
     }
 

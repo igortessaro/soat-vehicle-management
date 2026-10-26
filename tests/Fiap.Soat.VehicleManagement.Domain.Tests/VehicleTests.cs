@@ -28,6 +28,7 @@ public class VehicleTests
     public void UpdatePrice_ShouldChangePriceAndReturnSameVehicle()
     {
         var vehicle = CreateVehicle();
+        var beforeUpdate = DateTime.UtcNow;
 
         var result = vehicle.UpdatePrice(125000m);
 
@@ -35,6 +36,7 @@ public class VehicleTests
         {
             Assert.That(result, Is.SameAs(vehicle));
             Assert.That(vehicle.Price, Is.EqualTo(125000m));
+            Assert.That(vehicle.UpdatedAt, Is.GreaterThanOrEqualTo(beforeUpdate));
         });
     }
 
@@ -42,6 +44,7 @@ public class VehicleTests
     public void Update_ShouldReplaceAllMutablePropertiesAndReturnSameVehicle()
     {
         var vehicle = CreateVehicle();
+        var beforeUpdate = DateTime.UtcNow;
 
         var result = vehicle.Update("Honda", "Civic", "xyz9a99", 2025, "White", 130000m);
 
@@ -54,6 +57,24 @@ public class VehicleTests
             Assert.That(vehicle.ManufactureYear, Is.EqualTo(2025));
             Assert.That(vehicle.Color, Is.EqualTo("White"));
             Assert.That(vehicle.Price, Is.EqualTo(130000m));
+            Assert.That(vehicle.UpdatedAt, Is.GreaterThanOrEqualTo(beforeUpdate));
+        });
+    }
+
+    [Test]
+    public void StateTransitions_ShouldMarkVehicleAsUpdated()
+    {
+        var vehicle = CreateVehicle();
+        Func<Vehicle>[] transitions = [vehicle.Reserve, vehicle.Sold, vehicle.Deliver, vehicle.Release];
+
+        Assert.Multiple(() =>
+        {
+            foreach (var transition in transitions)
+            {
+                var beforeTransition = DateTime.UtcNow;
+                transition();
+                Assert.That(vehicle.UpdatedAt, Is.GreaterThanOrEqualTo(beforeTransition));
+            }
         });
     }
 
