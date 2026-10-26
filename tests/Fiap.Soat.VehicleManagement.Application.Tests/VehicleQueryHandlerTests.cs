@@ -55,11 +55,12 @@ public class VehicleQueryHandlerTests
         var vehicles = new[] { ApplicationTestData.CreateVehicle() };
         var statuses = new[] { VehicleStatus.Available, VehicleStatus.Reserved };
         _repository
-            .Setup(x => x.GetAllAsync("ABC1234", "Corolla", "Toyota", "Black", 2024, statuses, It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAllAsync(
+                new VehicleFilter("ABC1234", "Toyota", "Corolla", 2024, "Black", statuses), It.IsAny<CancellationToken>()))
             .ReturnsAsync(vehicles);
 
         var response = await new ListVehicleHandler(_repository.Object).Handle(
-            new ListVehicleQuery("ABC1234", "Toyota", "Corolla", 2024, "Black", statuses),
+            new ListVehicleQuery("ABC1234", "Toyota", "Corolla", 2024, "Black", statuses, null),
             CancellationToken.None);
 
         Assert.Multiple(() =>
@@ -68,6 +69,25 @@ public class VehicleQueryHandlerTests
             Assert.That(response.Data, Is.SameAs(vehicles));
         });
         _repository.Verify(x => x.GetAllAsync(
-            "ABC1234", "Corolla", "Toyota", "Black", 2024, statuses, It.IsAny<CancellationToken>()), Times.Once);
+            new VehicleFilter("ABC1234", "Toyota", "Corolla", 2024, "Black", statuses), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Test]
+    public async Task List_WhenUpdatedSinceIsInformed_ForwardsItToRepository()
+    {
+        var updatedSince = new DateTime(2026, 1, 2, 0, 0, 0, DateTimeKind.Utc);
+        var statuses = Array.Empty<VehicleStatus>();
+        var expectedFilter = new VehicleFilter(Status: statuses, UpdatedSince: updatedSince);
+        using var cancellation = new CancellationTokenSource();
+        _repository
+            .Setup(x => x.GetAllAsync(expectedFilter, cancellation.Token))
+            .ReturnsAsync([]);
+
+        var response = await new ListVehicleHandler(_repository.Object).Handle(
+            new ListVehicleQuery(null, null, null, null, null, statuses, updatedSince),
+            cancellation.Token);
+
+        Assert.That(response.IsSuccess, Is.True);
+        _repository.Verify(x => x.GetAllAsync(expectedFilter, cancellation.Token), Times.Once);
     }
 }

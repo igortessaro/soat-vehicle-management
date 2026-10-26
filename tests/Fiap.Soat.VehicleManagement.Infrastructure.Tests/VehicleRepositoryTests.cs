@@ -1,3 +1,4 @@
+using Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 using Fiap.Soat.VehicleManagement.Domain.Entities;
 using Fiap.Soat.VehicleManagement.Domain.Shared;
 using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
@@ -9,6 +10,7 @@ namespace Fiap.Soat.VehicleManagement.Infrastructure.Tests;
 public class VehicleRepositoryTests
 {
     private static readonly decimal[] ExpectedPricesInAscendingOrder = [90000m, 120000m];
+    private static readonly DateTime UpdatedSince = new(2026, 1, 2, 0, 0, 0, DateTimeKind.Utc);
 
     [Test]
     public async Task AddAndGetByIdAsync_PersistsVehicle()
@@ -53,7 +55,7 @@ public class VehicleRepositoryTests
         await AddVehicle(context, "Toyota", "Yaris", 90000, VehicleStatus.Available, "Red");
 
         var result = await repository.GetAllAsync(
-            null, null, "Toyota", null, null, [VehicleStatus.Available], CancellationToken.None);
+            new VehicleFilter(Brand: "Toyota", Status: [VehicleStatus.Available]), CancellationToken.None);
 
         Assert.Multiple(() =>
         {
@@ -71,7 +73,7 @@ public class VehicleRepositoryTests
         await AddVehicle(context, "Toyota", "Corolla", 100000, VehicleStatus.Sold, "Black", 2024, "XYZ9876");
 
         var result = await repository.GetAllAsync(
-            "ABC1234", "Corolla", "Toyota", "Black", 2024, [VehicleStatus.Available], CancellationToken.None);
+            new VehicleFilter("ABC1234", "Toyota", "Corolla", 2024, "Black", [VehicleStatus.Available]), CancellationToken.None);
 
         Assert.That(result.Single().Id, Is.EqualTo(expected.Id));
     }
@@ -124,7 +126,36 @@ public class VehicleRepositoryTests
         await repository.DeleteAsync(first, CancellationToken.None);
         await repository.DeleteRangeAsync([second], CancellationToken.None);
 
-        Assert.That(await repository.GetAllAsync(null, null, null, null, null, [], CancellationToken.None), Is.Empty);
+        Assert.That(await repository.GetAllAsync(new VehicleFilter(), CancellationToken.None), Is.Empty);
+    }
+
+    [Test]
+    public async Task GetAllAsync_WhenUpdatedSinceIsInformed_ReturnsVehiclesUpdatedFromThatMoment()
+    {
+        await using var context = InfrastructureTestFixture.CreateContext();
+        var repository = new VehicleRepository(context);
+        await AddVehicle(context, "Toyota", "Before", 100000, plate: "AAA1111", updatedAt: UpdatedSince.AddTicks(-1));
+        var atCutoff = await AddVehicle(context, "Toyota", "AtCutoff", 120000, plate: "BBB2222", updatedAt: UpdatedSince);
+        var after = await AddVehicle(context, "Toyota", "After", 90000, plate: "CCC3333", updatedAt: UpdatedSince.AddHours(1));
+
+        var result = await repository.GetAllAsync(new VehicleFilter(UpdatedSince: UpdatedSince), CancellationToken.None);
+
+        Assert.That(result.Select(x => x.Id), Is.EqualTo(new[] { after.Id, atCutoff.Id }));
+    }
+
+    [Test]
+    public async Task GetAllAsync_WhenUpdatedSinceIsCombinedWithStatus_AppliesBothFilters()
+    {
+        await using var context = InfrastructureTestFixture.CreateContext();
+        var repository = new VehicleRepository(context);
+        var expected = await AddVehicle(context, "Toyota", "Available", 100000, plate: "AAA1111", updatedAt: UpdatedSince.AddHours(1));
+        await AddVehicle(context, "Toyota", "Sold", 90000, VehicleStatus.Sold, plate: "BBB2222", updatedAt: UpdatedSince.AddHours(1));
+        await AddVehicle(context, "Toyota", "Old", 80000, plate: "CCC3333", updatedAt: UpdatedSince.AddHours(-1));
+
+        var result = await repository.GetAllAsync(
+            new VehicleFilter(Status: [VehicleStatus.Available], UpdatedSince: UpdatedSince), CancellationToken.None);
+
+        Assert.That(result.Single().Id, Is.EqualTo(expected.Id));
     }
 
     [Test]
@@ -251,10 +282,12 @@ public class VehicleRepositoryTests
         VehicleStatus status = VehicleStatus.Available,
         string color = "Black",
         int year = 2024,
-        string plate = "ABC1234")
+        string plate = "ABC1234",
+        DateTime? updatedAt = null)
     {
         var vehicle = CreateVehicle(brand, model, price, status, color, year, plate);
         context.Vehicles.Add(vehicle);
+        if (updatedAt.HasValue) context.Entry(vehicle).Property(x => x.UpdatedAt).CurrentValue = updatedAt.Value;
         await context.SaveChangesAsync();
         return vehicle;
     }

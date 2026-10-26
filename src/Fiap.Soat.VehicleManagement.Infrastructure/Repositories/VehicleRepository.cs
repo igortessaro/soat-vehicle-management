@@ -1,6 +1,5 @@
 using Fiap.Soat.VehicleManagement.Application.Adapters.Gateways.Repositories;
 using Fiap.Soat.VehicleManagement.Domain.Entities;
-using Fiap.Soat.VehicleManagement.Domain.ValueObjects;
 using Fiap.Soat.VehicleManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -12,22 +11,16 @@ namespace Fiap.Soat.VehicleManagement.Infrastructure.Repositories;
 
 public sealed class VehicleRepository(AppDbContext appDbContext) : Repository<Vehicle>(appDbContext), IVehicleRepository
 {
-    public async Task<IReadOnlyList<Vehicle>> GetAllAsync(
-        string? licensePlate,
-        string? model,
-        string? brand,
-        string? color,
-        int? year,
-        VehicleStatus[] status,
-        CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<Vehicle>> GetAllAsync(VehicleFilter filter, CancellationToken cancellationToken)
     {
         var query = Query();
-        if (!string.IsNullOrEmpty(licensePlate)) query = query.Where(x => x.LicensePlate == licensePlate);
-        if (!string.IsNullOrEmpty(model)) query = query.Where(x => x.Model == model);
-        if (!string.IsNullOrEmpty(brand)) query = query.Where(x => x.Brand == brand);
-        if (!string.IsNullOrEmpty(color)) query = query.Where(x => x.Color == color);
-        if (year.HasValue) query = query.Where(x => x.ManufactureYear == year);
-        if (status is { Length: > 0 }) query = query.Where(x => status.Contains(x.Status));
+        if (!string.IsNullOrEmpty(filter.LicensePlate)) query = query.Where(x => x.LicensePlate == filter.LicensePlate);
+        if (!string.IsNullOrEmpty(filter.Model)) query = query.Where(x => x.Model == filter.Model);
+        if (!string.IsNullOrEmpty(filter.Brand)) query = query.Where(x => x.Brand == filter.Brand);
+        if (!string.IsNullOrEmpty(filter.Color)) query = query.Where(x => x.Color == filter.Color);
+        if (filter.Year.HasValue) query = query.Where(x => x.ManufactureYear == filter.Year);
+        if (filter.Status is { Length: > 0 } status) query = query.Where(x => Enumerable.Contains(status, x.Status));
+        if (filter.UpdatedSince is { } updatedSince) query = query.Where(x => x.UpdatedAt >= updatedSince);
         return await query.OrderBy(x => x.Price).ToListAsync(cancellationToken);
     }
 

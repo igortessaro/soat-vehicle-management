@@ -34,7 +34,7 @@ public class VehicleControllerTests
     [Test]
     public async Task GetAllAsync_SendsOriginalQuery()
     {
-        var query = new ListVehicleQuery(null, "Toyota", null, null, null, []);
+        var query = new ListVehicleQuery(null, "Toyota", null, null, null, [], null);
         _mediator.Setup(x => x.Send(query, It.IsAny<CancellationToken>()))
             .ReturnsAsync(ResponseFactory.Ok<IReadOnlyList<Domain.Entities.Vehicle>>([]));
 

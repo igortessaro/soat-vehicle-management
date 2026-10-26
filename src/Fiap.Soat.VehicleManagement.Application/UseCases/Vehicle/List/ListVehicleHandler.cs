@@ -11,12 +11,14 @@ public sealed class ListVehicleHandler(IVehicleRepository repository) : IRequest
 {
     public async Task<Response<IReadOnlyList<Domain.Entities.Vehicle>>> Handle(ListVehicleQuery request, CancellationToken cancellationToken) =>
         ResponseFactory.Ok(await repository.GetAllAsync(
-            request.LicensePlate,
-            request.Model,
-            request.Brand,
-            request.Color,
-            request.Year,
-            request.Status,
+            new VehicleFilter(
+                request.LicensePlate,
+                request.Brand,
+                request.Model,
+                request.Year,
+                request.Color,
+                request.Status,
+                request.UpdatedSince),
             cancellationToken
         ));
 }
