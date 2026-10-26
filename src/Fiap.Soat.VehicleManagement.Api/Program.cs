@@ -90,11 +90,8 @@ _ = VehicleInternalEndpoints.Map(app);
 
 await app.RunAsync();
 
-namespace Fiap.Soat.VehicleManagement.Api
+[ExcludeFromCodeCoverage]
+public partial class Program
 {
-    [ExcludeFromCodeCoverage]
-    public partial class Program
-    {
-        protected Program() { }
-    }
+    protected Program() { }
 }
