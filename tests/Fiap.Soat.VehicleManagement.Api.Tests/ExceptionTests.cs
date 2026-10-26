@@ -24,4 +24,17 @@ public class ExceptionTests
 
         Assert.That(exception.Message, Is.EqualTo("vehicle not found"));
     }
+
+    [Test]
+    public void ResourceNotFoundException_WithInnerException_PreservesDetails()
+    {
+        var inner = new InvalidOperationException("inner");
+        var exception = new ResourceNotFoundException("vehicle not found", inner);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(exception.Message, Is.EqualTo("vehicle not found"));
+            Assert.That(exception.InnerException, Is.SameAs(inner));
+        });
+    }
 }

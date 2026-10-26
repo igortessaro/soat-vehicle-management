@@ -16,11 +16,11 @@ public sealed class Vehicle : Entity
     }
 
     public VehicleType Type { get; private set; } = VehicleType.Car;
-    public string Brand { get; private set; }
-    public string Model { get; private set; }
+    public string Brand { get; private set; } = string.Empty;
+    public string Model { get; private set; } = string.Empty;
     public LicensePlate LicensePlate { get; private set; } = null!;
     public int ManufactureYear { get; private set; }
-    public string Color { get; private set; }
+    public string Color { get; private set; } = string.Empty;
     public decimal Price { get; private set; }
     public VehicleStatus Status { get; private set; } = VehicleStatus.Available;
 

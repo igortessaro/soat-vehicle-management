@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Fiap.Soat.VehicleManagement.Api.Endpoints;
@@ -29,16 +30,19 @@ public static class VehicleEndpoints
 
         vehiclesApi.MapGet("", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
                 controller.GetAllAsync(request, cancellationToken))
+            .AddEndpointFilter<ResponseFilter<IReadOnlyList<VehicleDetail>>>()
             .WithName("ListVehicles")
             .WithDescription("List all vehicles");
 
         vehiclesApi.MapGet("sold", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
             controller.GetAllAsync(request with { Status = [VehicleStatus.Sold, VehicleStatus.Delivered] }, cancellationToken))
+            .AddEndpointFilter<ResponseFilter<IReadOnlyList<VehicleDetail>>>()
             .WithName("ListSoldVehicles")
             .WithDescription("List all sold vehicles");
 
         vehiclesApi.MapGet("available", ([FromServices] IVehicleController controller, [AsParameters] ListVehicleQuery request, CancellationToken cancellationToken) =>
             controller.GetAllAsync(request with { Status = [VehicleStatus.Available] }, cancellationToken))
+            .AddEndpointFilter<ResponseFilter<IReadOnlyList<VehicleDetail>>>()
             .WithName("ListAvailableVehicles")
             .WithDescription("List all available vehicles");
 

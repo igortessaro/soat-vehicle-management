@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,7 +78,6 @@ _ = app.UseHttpsRedirection();
 
 _ = app.MapScalarApiReference();
 _ = app.UseMiddleware<ExceptionMiddleware>();
-_ = app.UseHttpsRedirection();
 _ = app.UseAuthorization();
 _ = app.MapControllers();
 _ = app.MapHealthChecks("/health", new HealthCheckOptions
@@ -92,6 +92,7 @@ await app.RunAsync();
 
 namespace Fiap.Soat.VehicleManagement.Api
 {
+    [ExcludeFromCodeCoverage]
     public partial class Program
     {
         protected Program() { }
