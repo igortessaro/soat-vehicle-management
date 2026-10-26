@@ -1,0 +1,471 @@
+{
+  "info": {
+    "_postman_id": "dfffa4fd-28a4-47c1-bfaa-7bd5920e0659",
+    "name": "Fiap | Soat | Vehicle",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1999875"
+  },
+  "item": [
+    {
+      "name": "management",
+      "item": [
+        {
+          "name": "internal",
+          "item": [
+            {
+              "name": "reserve",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{management-api}}api/v1/internal/vehicles/:id/reserve",
+                  "host": [
+                    "{{management-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "internal",
+                    "vehicles",
+                    ":id",
+                    "reserve"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "08df2ea7-e811-4997-8289-4762cc4c1825"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "release",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{management-api}}api/v1/internal/vehicles/:id/release",
+                  "host": [
+                    "{{management-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "internal",
+                    "vehicles",
+                    ":id",
+                    "release"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "08df2ea7-e811-4997-8289-4762cc4c1825"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "sell",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{management-api}}api/v1/internal/vehicles/:id/sell",
+                  "host": [
+                    "{{management-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "internal",
+                    "vehicles",
+                    ":id",
+                    "sell"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "08df2ea7-e811-4997-8289-4762cc4c1825"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles/:id",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "08df3086-7914-4718-88d2-d6998e4d36a7"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Toyota\",\n  \"model\": \"Corolla\",\n  \"licensePlate\": \"NCM-8546\",\n  \"year\": 2020,\n  \"color\": \"Silver\",\n  \"price\": 150000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"brand\": \"Toyota1\",\n  \"model\": \"Corolla1\",\n  \"licensePlate\": \"NCM-8547\",\n  \"year\": 2022,\n  \"color\": \"Silver1\",\n  \"price\": 290876\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles/:id",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "08df2ea7-e811-4997-8289-4762cc4c1825"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all available",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles/available",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles",
+                "available"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all sold",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{management-api}}api/v1/vehicles/sold",
+              "host": [
+                "{{management-api}}api"
+              ],
+              "path": [
+                "v1",
+                "vehicles",
+                "sold"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "sales",
+      "item": [
+        {
+          "name": "vehicles",
+          "item": [
+            {
+              "name": "get all available vehicles",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{sales-api}}api/v1/vehicles/available",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "available"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all sold vehicles",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{sales-api}}api/v1/vehicles/sold",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "vehicles",
+                    "sold"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "webhook",
+          "item": [
+            {
+              "name": "update payment",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"paymentCode\": \"88f8aa5915e04d5d8d4b178b51573bd4\",\n    \"status\": \"PAID\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{sales-api}}api/v1/webhooks/payments",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "webhooks",
+                    "payments"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "payment-gateway",
+          "item": [
+            {
+              "name": "get all",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{sales-api}}api/v1/payment-gateways",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment-gateways"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"soat-payment-gateway\",\n    \"baseUrl\": \"http://payment-gateway:8080\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{sales-api}}api/v1/payment-gateways",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment-gateways"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"soat-payment-gateway-v2\",\n    \"baseUrl\": \"http://payment-gateway:8080\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{sales-api}}api/v1/payment-gateways/:id",
+                  "host": [
+                    "{{sales-api}}api"
+                  ],
+                  "path": [
+                    "v1",
+                    "payment-gateways",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "08df329d-131c-43d0-811c-dbf4ade59cdd"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "create sale",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleId\": \"08df329c-2193-4713-8f63-3f4d12c3d9bc\",\n  \"buyerDocument\": \"238.980.420-90\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{sales-api}}api/v1/sales",
+              "host": [
+                "{{sales-api}}api"
+              ],
+              "path": [
+                "v1",
+                "sales"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "deliver vehicle",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{sales-api}}api/v1/sales/:saleId/deliver",
+              "host": [
+                "{{sales-api}}api"
+              ],
+              "path": [
+                "v1",
+                "sales",
+                ":saleId",
+                "deliver"
+              ],
+              "variable": [
+                {
+                  "key": "saleId",
+                  "value": "08df3094-da18-43fe-84da-3bd80bb07e49"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "management-api",
+      "value": ""
+    },
+    {
+      "key": "sales-api",
+      "value": ""
+    }
+  ]
+}
