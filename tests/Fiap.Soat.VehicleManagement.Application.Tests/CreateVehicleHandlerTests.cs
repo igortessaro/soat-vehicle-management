@@ -49,8 +49,11 @@ public class CreateVehicleHandlerTests
             new CreateVehicleCommand("Toyota", "Corolla", "ABC1234", 2024, "Black", 100000),
             CancellationToken.None);
 
-        Assert.That(response.IsSuccess, Is.False);
-        Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle with this license plate already exists"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle with this license plate already exists"));
+        });
         _repository.Verify(x => x.GetByLicensePlateAsync("ABC1234", It.IsAny<CancellationToken>()), Times.Once);
         _repository.VerifyNoOtherCalls();
     }

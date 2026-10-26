@@ -15,8 +15,11 @@ public class ResponseFilterTests
         var result = await filter.InvokeAsync(context, _ =>
             ValueTask.FromResult<object?>(ResponseFactory.Fail<string>("invalid")));
 
-        Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
-        Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
+            Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        });
     }
 
     [Test]
@@ -28,8 +31,11 @@ public class ResponseFilterTests
         var result = await filter.InvokeAsync(context, _ =>
             ValueTask.FromResult<object?>(ResponseFactory.Fail("invalid")));
 
-        Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
-        Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.InstanceOf<IStatusCodeHttpResult>());
+            Assert.That(((IStatusCodeHttpResult) result!).StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        });
     }
 
     [Test]

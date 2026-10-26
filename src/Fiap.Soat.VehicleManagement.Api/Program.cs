@@ -51,21 +51,21 @@ _ = builder.Services.AddMemoryCache();
 _ = builder.Services.AddInterfaceAdapters();
 
 _ = builder.Services.AddOpenApi();
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 _ = builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowedOrigins", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
-// _ = builder.Services.AddHttpClient();
 _ = builder.Services.AddHttpLogging();
 
 var app = builder.Build();
 
-_ = app.UseCors("AllowAll");
+_ = app.UseCors("AllowedOrigins");
 _ = app.UseHttpLogging();
 
 // Configure the HTTP request pipeline.

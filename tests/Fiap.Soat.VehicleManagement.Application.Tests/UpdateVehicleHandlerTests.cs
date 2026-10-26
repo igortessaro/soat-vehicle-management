@@ -46,8 +46,11 @@ public class UpdateVehicleHandlerTests
             new UpdateVehicleCommand(id, "Honda", "Civic", "XYZ9876", 2023, "White", 120000),
             CancellationToken.None);
 
-        Assert.That(response.IsSuccess, Is.False);
-        Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle not found"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle not found"));
+        });
         _repository.Verify(x => x.UpdateAsync(It.IsAny<Vehicle>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
@@ -64,8 +67,11 @@ public class UpdateVehicleHandlerTests
             new UpdateVehicleCommand(Guid.NewGuid(), brand, model, plate, year, color, price),
             CancellationToken.None);
 
-        Assert.That(response.IsSuccess, Is.False);
-        Assert.That(response.Reasons[0].Message, Is.EqualTo(error));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Reasons[0].Message, Is.EqualTo(error));
+        });
         _repository.VerifyNoOtherCalls();
     }
 
@@ -137,7 +143,10 @@ public class UpdateVehicleHandlerTests
         var response = await new UpdateVehicleHandler(_repository.Object)
             .Handle(new ReserveVehicleCommand(id), CancellationToken.None);
 
-        Assert.That(response.IsSuccess, Is.False);
-        Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle not found"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.IsSuccess, Is.False);
+            Assert.That(response.Reasons[0].Message, Is.EqualTo("Vehicle not found"));
+        });
     }
 }

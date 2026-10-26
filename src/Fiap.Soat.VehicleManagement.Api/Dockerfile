@@ -14,11 +14,16 @@ COPY ["src/Fiap.Soat.VehicleManagement.Domain/Fiap.Soat.VehicleManagement.Domain
 RUN dotnet restore "src/Fiap.Soat.VehicleManagement.Api/Fiap.Soat.VehicleManagement.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Fiap.Soat.VehicleManagement.Api"
-RUN dotnet build "./Fiap.Soat.VehicleManagement.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Fiap.Soat.VehicleManagement.Api.csproj" \
+    -c "$BUILD_CONFIGURATION" \
+    -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Fiap.Soat.VehicleManagement.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Fiap.Soat.VehicleManagement.Api.csproj" \
+    -c "$BUILD_CONFIGURATION" \
+    -o /app/publish \
+    /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

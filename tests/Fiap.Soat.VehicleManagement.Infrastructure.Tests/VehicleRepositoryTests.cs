@@ -8,6 +8,8 @@ namespace Fiap.Soat.VehicleManagement.Infrastructure.Tests;
 
 public class VehicleRepositoryTests
 {
+    private static readonly decimal[] ExpectedPricesInAscendingOrder = [90000m, 120000m];
+
     [Test]
     public async Task AddAndGetByIdAsync_PersistsVehicle()
     {
@@ -56,7 +58,7 @@ public class VehicleRepositoryTests
         Assert.Multiple(() =>
         {
             Assert.That(result, Has.Count.EqualTo(2));
-            Assert.That(result.Select(x => x.Price), Is.EqualTo(new[] { 90000m, 120000m }));
+            Assert.That(result.Select(x => x.Price), Is.EqualTo(ExpectedPricesInAscendingOrder));
         });
     }
 

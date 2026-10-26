@@ -23,7 +23,7 @@ public class VehicleInternalEndpointsTests
     {
         var id = Guid.NewGuid();
         _controller.Setup(OperationCall(operation, id))
-            .ReturnsAsync(ResponseFactory.Ok(VehicleEndpointsTests.CreateVehicleDetail()));
+            .ReturnsAsync(ResponseFactory.Ok(ApiTestData.CreateVehicleDetail()));
         await using var server = await StartServer();
 
         var response = await server.Client.PostAsync($"api/v1/internal/vehicles/{id}/{operation}", null);

@@ -22,7 +22,7 @@ public class VehicleEndpointsTests
     [Test]
     public async Task GetVehicle_PassesRouteIdAndReturnsVehicle()
     {
-        var vehicle = CreateVehicleDetail();
+        var vehicle = ApiTestData.CreateVehicleDetail();
         _controller.Setup(x => x.GetAsync(vehicle.Id, It.IsAny<CancellationToken>())).ReturnsAsync(ResponseFactory.Ok(vehicle));
         await using var server = await StartServer();
 
@@ -107,7 +107,7 @@ public class VehicleEndpointsTests
     public async Task CreateVehicle_PassesBodyToController()
     {
         _controller.Setup(x => x.CreateAsync(It.IsAny<CreateVehicleCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(ResponseFactory.Ok(CreateVehicleDetail(), HttpStatusCode.Created));
+            .ReturnsAsync(ResponseFactory.Ok(ApiTestData.CreateVehicleDetail(), HttpStatusCode.Created));
         await using var server = await StartServer();
 
         var response = await server.Client.PostAsJsonAsync("api/v1/vehicles",
@@ -124,7 +124,7 @@ public class VehicleEndpointsTests
     {
         var id = Guid.NewGuid();
         _controller.Setup(x => x.UpdateAsync(id, It.IsAny<UpdateVehicleCommand>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(ResponseFactory.Ok(CreateVehicleDetail()));
+            .ReturnsAsync(ResponseFactory.Ok(ApiTestData.CreateVehicleDetail()));
         await using var server = await StartServer();
 
         var response = await server.Client.PutAsJsonAsync($"api/v1/vehicles/{id}",
@@ -139,11 +139,8 @@ public class VehicleEndpointsTests
 
     private void SetupList() =>
         _controller.Setup(x => x.GetAllAsync(It.IsAny<ListVehicleQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(ResponseFactory.Ok<IReadOnlyList<VehicleDetail>>([CreateVehicleDetail()]));
+            .ReturnsAsync(ResponseFactory.Ok<IReadOnlyList<VehicleDetail>>([ApiTestData.CreateVehicleDetail()]));
 
     private Task<EndpointTestServer> StartServer() =>
         EndpointTestServer.StartAsync(_controller.Object, VehicleEndpoints.Map);
-
-    internal static VehicleDetail CreateVehicleDetail() =>
-        new(Guid.NewGuid(), "Toyota", "Corolla", "ABC1234", 2024, "Black", 100000m, VehicleStatus.Available, DateTime.UtcNow, DateTime.UtcNow);
 }
