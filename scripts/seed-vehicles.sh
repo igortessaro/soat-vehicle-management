@@ -22,7 +22,7 @@ FAILED=0
 TOTAL=0
 
 while IFS='|' read -r brand model plate year color price; do
-  [ -z "${brand}" ] && continue
+  [[ -z "${brand}" ]] && continue
   TOTAL=$((TOTAL + 1))
 
   body=$(printf '{"brand":"%s","model":"%s","licensePlate":"%s","year":%s,"color":"%s","price":%s}' \
@@ -36,13 +36,13 @@ while IFS='|' read -r brand model plate year color price; do
     --data "$body")
   curl_status=$?
 
-  if [ "$curl_status" -eq 0 ] && [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+  if [[ "$curl_status" -eq 0 && "$http_code" -ge 200 && "$http_code" -lt 300 ]]; then
     SUCCESS=$((SUCCESS + 1))
     printf '[%02d/%02d] OK   %s %s (%s) - HTTP %s\n' "$TOTAL" 55 "$brand" "$model" "$plate" "$http_code"
   else
     FAILED=$((FAILED + 1))
     printf '[%02d/%02d] ERRO %s %s (%s) - HTTP %s\n' "$TOTAL" 55 "$brand" "$model" "$plate" "${http_code:-curl-error}"
-    if [ -f /tmp/seed-vehicle-response.json ]; then
+    if [[ -f /tmp/seed-vehicle-response.json ]]; then
       cat /tmp/seed-vehicle-response.json
       printf '\n'
     fi
@@ -108,7 +108,7 @@ VEHICLES
 printf '\nResumo: %s tentativas | %s sucesso(s) | %s falha(s)\n' "$TOTAL" "$SUCCESS" "$FAILED"
 rm -f /tmp/seed-vehicle-response.json
 
-if [ "$FAILED" -gt 0 ]; then
+if [[ "$FAILED" -gt 0 ]]; then
   exit 1
 fi
 exit 0
